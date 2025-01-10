@@ -1,0 +1,22 @@
+{
+    "name": "Buena Vista",
+    "description": "The default theme of the Scribe CMS",
+
+    "author": "Scribe CMS",
+    "author_uri": "https://scribecms.org/",
+
+    "version": "0.0.1",
+
+    "favicon": "img/favicon.svg",
+
+    "stylesheets": {
+        "normalize": {
+            "path": "css/normalize.min.css",
+            "version": "8.0.1"
+        },
+        "main": {
+            "path": "css/main.css",
+            "version": "0.0.1"
+        }
+    }
+}
