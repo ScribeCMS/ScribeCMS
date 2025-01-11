@@ -1,6 +1,6 @@
 # Experimental CMS
 
-To install and use this experimental CMS on a live web host, your host will need to meed the minimum qualafications for a Laravel project, and you will need SSH access to the server that hosts your site.
+To install and use this experimental CMS on a live web host, your host will need to meet the [minimum requirements](https://laravel.com/docs/11.x/deployment#server-requirements) for a Laravel project, and you will need SSH access to the server that hosts your site.
 
 ## Local development
 
