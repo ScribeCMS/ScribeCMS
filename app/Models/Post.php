@@ -25,8 +25,8 @@ class Post extends Model
         'slug',
         'published_at',
         'comment_count',
+        'comments_on',
         'status',
-        'allow_comments',
     ];
 
     protected function casts(): array
@@ -86,7 +86,7 @@ class Post extends Model
 
     public function author()
     {
-        return $this->user;
+        return Attribute::make( $this->user );
     }
 
     public function scopePublished( Builder $query )

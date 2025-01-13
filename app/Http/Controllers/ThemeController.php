@@ -3,6 +3,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Contracts\Database\Eloquent\Builder;
 
 use App\Http\Controllers\Controller;
 use App\Models\Page;
@@ -31,7 +32,7 @@ class ThemeController extends Controller
 
     public function singular( string $slug, Page $page, Post $post )
     {
-        if ( $page = $page->published()->slug( $slug )->first() ) {
+        if ( $page = $page->published()->slug( $slug )->with( 'user' )->first() ) {
             return view()->first(
                 [
                     'theme::page-' . $page->slug,
@@ -43,7 +44,19 @@ class ThemeController extends Controller
             );
         }
 
-        if ( $post = $post->published()->slug( $slug )->first() ) {
+        // Eager load Comments and User with Post
+        $post = $post->query()
+                ->published()
+                ->slug( $slug )
+                ->with( [
+                    'comments' => function( Builder $query ) {
+                        $query->whereNull( 'parent_id' );
+                    },
+                    'user',
+                ] )
+                ->first();
+
+        if ( $post ) {
             return view()->first(
                 [
                     'theme::post-' . $post->slug,
@@ -70,7 +83,11 @@ class ThemeController extends Controller
 
     public function posts()
     {
-        $posts = Post::query()->latest()->published()->get();
+        $posts = Post::query()
+            ->latest()
+            ->published()
+            ->with( 'user' )
+            ->paginate( 10 );
 
         return view()->first(
             [

@@ -7,6 +7,9 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Controller;
 
 use App\Models\Comment;
+use App\Models\Post;
+use App\Http\Actions\Comment\CreateComment;
+use App\Http\Actions\Comment\UpdateComment;
 
 class CommentController
 {
@@ -22,7 +25,7 @@ class CommentController
                     return $query->where( 'status', $request->status );
                 }
             } )
-            ->orderBy('published_at', 'desc')
+            ->latest()
             ->with( 'post' )
             ->with( 'parent' )
             ->with( 'replies' )
@@ -52,9 +55,22 @@ class CommentController
 
     }
 
-    public function update()
+    public function storePublic( Post $post, Request $request, CreateComment $createComment )
     {
+        if ( $comment = $createComment( $post, $request ) ) {
+            return back()
+                ->withFragment( 'comment-' . $comment->id )
+                ->with( 'success', __('Comment Created') );
+        }
 
+        return back()->withErrors( [ 'message'=> 'Comment could not be created.' ] );
+    }
+
+    public function update( Comment $comment, Request $request, UpdateComment $updateComment )
+    {
+        $comment = $updateComment( $comment, $request );
+
+        return to_route( 'admin.comments.edit', [ 'comment' => $comment ] );
     }
 
     public function trash( Comment $comment )
