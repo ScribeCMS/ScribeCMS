@@ -56,7 +56,7 @@ $users = User::select('id', 'first_name', 'last_name')->get();
             <p><select name="user_id" form="edit-post" id="user_id">
             @foreach( $users as $user )
                 <option value="{{ $user->id }}" {{ $user->id === $post->user_id ? 'selected' : '' }}>
-                    {{ $user->first_name }} {{ $user->last_name }}
+                    {{ $user->display_name }}
                 </option>
             @endforeach
             </select>

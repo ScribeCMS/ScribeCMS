@@ -31,6 +31,7 @@ return new class extends Migration {
             $table->longText('body')
                 ->nullable();
             $table->boolean('comments_on')
+                ->nullable()
                 ->default(env('COMMENTS_ON'));
             $table->integer('comment_count')
                 ->default(0);
