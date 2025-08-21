@@ -27,9 +27,10 @@
 - Views
     - [x] Index
     - [x] Trash/Restore/Destroy
-    - [ ] Edit / Create
-    - [ ] Enums
-    - [ ] Components
+    - [x] Create
+    - [ ] Edit
+    - [x] Enums
+    - [x] Components
 
 ## Users CRUD
 

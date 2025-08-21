@@ -30,8 +30,10 @@ return new class extends Migration
                 ->constrained()
                 ->cascadeOnDelete();
             $table->string( 'status', 20 ); //published, pending, spam
-            $table->ipAddress( 'ip' );
-            $table->string( 'ua', 255 );
+            $table->ipAddress( 'ip' )
+                ->nullable();
+            $table->string( 'ua', 255 )
+                ->nullable();
             $table->string( 'name', 50 );
             $table->string( 'email', 50 );
             $table->string( 'url', 50 )
